@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dictionary App</title>
+    <style>
+        /* CSS styles for the page layout */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .search-form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .search-input {
+            width: 400px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        .search-button {
+            padding: 12px 22px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            border-radius: 2px;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.1s, box-shadow 0.1s;
+        }
+        .search-button:hover{
+            box-shadow: 0px 0px 10px 1px rgb(180, 180, 180);
+            background-color: #29942d;
+        }
+        .search-results {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+        }
+
+        .result-word {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .result-definition {
+            font-size: 16px;
+            color: #666;
+        }
+        .result-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+        }
+        .loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+    </style>
+      
+</head>
+<body>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <h1>Dictionary App</h1>
+    <form id="search-form" class="search-form">
+        {% csrf_token %} 
+        <input type="text" id="search-input" class="search-input" placeholder="Enter a word">
+        <button id="search-button" class="search-button" type="submit">Search</button>
+    </form>
+
+    <div class="loading" style="display: none;">
+        <div class="spinner"></div>
+        <p>Loading...</p>
+    </div>    
+
+    <div class="search-results">
+    </div>
+
+    <script >
+        console.log('Starting ...');
+        jQuery(document).ready(function($) {
+            // Bind the click event to the search button
+            $('#search-form').submit(function(event) {
+                event.preventDefault();
+                console.log('Button clicked');
+                searchWord();
+            });
+        });
+
+        function searchWord() {
+            // Get the search query from the input field
+            const query = $('#search-input').val();
+
+            const csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
+
+            // Show the loading element
+            $('.loading').show();
+
+            // Make the Fetch API request
+            fetch('/search/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken,
+                },
+                body: JSON.stringify({ query: query }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // Handle the response data
+                    $('.search-results').html(
+                        '<h2 class="result-word">' + data.word + '</h2>' +
+                        '<p class="result-definition">' + data.definition + '</p>'
+                    );
+
+                    // Hide the loading element
+                    $('.loading').hide();
+                })
+                .catch(error => {
+                    // Handle any errors
+                    console.error('Error:', error);
+                    // Hide the loading element
+                    $('.loading').hide();
+                });
+        }
+
+    </script>
+</body>
+</html>
