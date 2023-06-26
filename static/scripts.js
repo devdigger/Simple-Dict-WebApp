@@ -90,8 +90,16 @@ console.log('Starting ...');
             })
                 .then(response => response.json())
                 .then(data => {
-                    displayResult(data);
-                    storeData(data);
+                    if (!isDictionaryEmpty(data)){
+                        displayResult(data);
+                        storeData(data);
+                    }
+                    else{
+                        $('.search-results').html(`
+                        <h2 class="result-word">No Word Found</h2>
+                        <p class="result-phonetics">Please make sure the word is correctly spelled!</p>
+                    `);
+                    }
                     document.getElementById("close-btn").style.display = "flex";
                     // Hide the loading element
                     $('.loading').hide();
@@ -103,6 +111,9 @@ console.log('Starting ...');
                     $('.loading').hide();
                 });
         }
+        function isDictionaryEmpty(obj) {
+            return Object.keys(obj).length === 0;
+          }
         function toggleDarkMode() {
             const body = document.querySelector('body');
             const container = document.getElementById('header');
@@ -113,6 +124,7 @@ console.log('Starting ...');
             if(aboutresults != null){
                 aboutresults.classList.toggle('about-results-dark');
             }
+            
             var toggleIcons = document.getElementsByClassName('toggle-icon');
             for (var i = 0; i < toggleIcons.length; i++) {
                 toggleIcons[i].classList.toggle('dark');
