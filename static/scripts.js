@@ -110,7 +110,9 @@ console.log('Starting ...');
 
             const srchresults = body.querySelector('#search-results');
             const aboutresults = body.querySelector('#about-results');
-            aboutresults.classList.toggle('about-results-dark');
+            if(aboutresults != null){
+                aboutresults.classList.toggle('about-results-dark');
+            }
             var toggleIcons = document.getElementsByClassName('toggle-icon');
             for (var i = 0; i < toggleIcons.length; i++) {
                 toggleIcons[i].classList.toggle('dark');
