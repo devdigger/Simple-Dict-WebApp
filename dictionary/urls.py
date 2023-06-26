@@ -21,5 +21,7 @@ from dictionary import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('search/', views.search),
+    path('about-us/', views.about),
     path('',views.homepage)
+
 ]
