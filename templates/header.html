@@ -1,0 +1,28 @@
+{% load static %}
+    <div class="sidebar" id="sidebar">
+        <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/about-us/">About Us</a></li>
+        </ul>
+    </div>
+
+    <div class="header" id="header">
+        <div class="left-section">
+            <div class="navbar">
+                <div class="navbar-toggle" onclick="toggleSidebar()">
+                    <span class="toggle-icon" id="toggle-icon"></span>
+                    <span class="toggle-icon" id="toggle-icon"></span>
+                    <span class="toggle-icon" id="toggle-icon"></span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="middle-section">
+            <h1 class="middle-header">{{ title }}</h1>
+        </div>
+
+        <div class="right-section">
+            <button id="dark-mode-button" class="button-icon button-icon-default" onclick="toggleDarkMode()">
+            </button>  
+        </div>
+    </div>
