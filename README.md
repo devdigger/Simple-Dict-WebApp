@@ -10,7 +10,7 @@ git clone <repository_url>
 ```
 2. Install the required dependencies:
 ```
-pip install django
+pip install django httpx python-freeDictionaryAPI
 ```
 3. Run the Django development server:
 ```
