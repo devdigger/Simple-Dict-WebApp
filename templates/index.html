@@ -5,141 +5,13 @@
         Dictionary App
         {% load static %}
     </title>
-    <style>
-        /* CSS styles for the page layout */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            transition: background-color 0.3s ease;
-        }
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .search-form {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .search-input {
-            width: 400px;
-            padding: 10px;
-            font-size: 16px;
-        }
-        .search-button {
-            padding: 12px 22px;
-            font-size: 16px;
-            background-color: #4CAF50;
-            border-radius: 2px;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.1s, box-shadow 0.1s;
-        }
-        .search-button:hover{
-            box-shadow: 0px 0px 10px 1px rgb(180, 180, 180);
-            background-color: #29942d;
-        }
-        .search-results {
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-        }
-        .search-results-dark{
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #a7a7a7;
-            color:#bdbdbd;
-            border: 1px solid #ddd;
-        }
-        .result-word {
-            font-size: 24px;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .result-definition {
-            font-size: 16px;
-            color: #666;
-        }
-        .result-item {
-            margin-bottom: 10px;
-            padding: 10px;
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-        }
-        .loading {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100px;
-        }
-
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #3498db;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .header{
-            display: flex;
-            justify-content: end;
-        }
-        .dark-mode {
-        background-color: #333;
-        color: #fff;
-        /* Add more styles as needed */
-        }
-        .button-icon{
-            height:50px;
-            width:50px;
-            border-radius: 50px;
-            align-items: center;
-        }
-        .button-icon:hover{
-            cursor: pointer;
-            box-shadow: 0px 0px 20px 1px grey;
-        }
-        .button-icon-default {
-        /* Default button icon styles */
-            background: url('{% static "night-mode.png" %}');
-            background-size: 50% auto;
-            background-position: center center;
-            background-repeat: no-repeat;
-            background-color: transparent;
-            border: 2px solid #2d2d2d;
-        }
-
-        .button-icon-clicked {
-        /* Clicked button icon styles */
-            background: url('{% static "brightness.png" %}');
-            background-size: 50% auto;
-            background-position: center center;
-            background-repeat: no-repeat;
-            background-color: rgb(255, 255, 255);
-            border: 2px solid #242424;
-        }
-
-    </style>
-    
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
 <body>
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <h1>Dictionary App</h1>
-    <div class="header" id="header">
-        <button id="dark-mode-button" class="button-icon button-icon-default" onclick="toggleDarkMode()">
-        </button>          
-    </div>
+
+    {% include 'header.html' %}
+    
     <form id="search-form" class="search-form">
         {% csrf_token %} 
         <input type="text" id="search-input" class="search-input" placeholder="Enter a word">
@@ -151,66 +23,14 @@
         <p>Loading...</p>
     </div>    
 
-    <div class="search-results" id="search-results">
+    <div class="search-container">
+        <button class="close-btn" id="close-btn" onclick="clearResults()"></button>
+        <div class="search-results" id="search-results">
+        </div>
     </div>
-    <script >
-        console.log('Starting ...');
-        $(document).ready(function() {
-            // Bind the click event to the search button
-            $('#search-form').submit(function(event) {
-                event.preventDefault();
-                console.log('Button clicked');
-                searchWord();
-            });
-        });
+    
 
-        function searchWord() {
-            // Get the search query from the input field
-            const query = $('#search-input').val();
-
-            const csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
-
-            // Show the loading element
-            $('.loading').show();
-
-            // Make the Fetch API request
-            fetch('/search/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': csrfToken,
-                },
-                body: JSON.stringify({ query: query }),
-            })
-                .then(response => response.json())
-                .then(data => {
-                    // Handle the response data
-                    $('.search-results').html(
-                        '<h2 class="result-word">' + data.word + '</h2>' +
-                        '<p class="result-definition">' + data.definition + '</p>'
-                    );
-
-                    // Hide the loading element
-                    $('.loading').hide();
-                })
-                .catch(error => {
-                    // Handle any errors
-                    console.error('Error:', error);
-                    // Hide the loading element
-                    $('.loading').hide();
-                });
-        }
-        function toggleDarkMode() {
-            const body = document.querySelector('body');
-            const container = document.getElementById('header');
-            const buttonIcon = container.querySelector('#dark-mode-button');
-
-            const srchresults = body.querySelector('#search-results');
-
-            srchresults.classList.toggle('search-results-dark');
-            body.classList.toggle('dark-mode');
-            buttonIcon.classList.toggle('button-icon-clicked');
-        }
+    <script src="{% static 'scripts.js' %}" >
     </script>
 </body>
 </html>
