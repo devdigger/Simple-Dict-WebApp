@@ -1,4 +1,4 @@
-# Dictionary Web App
+# Easydefine - A Quick Dictionary Web App
 
 This is a web application built with Django that allows users to search for word definitions in a dictionary.
 
