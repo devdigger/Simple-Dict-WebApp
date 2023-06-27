@@ -44,7 +44,7 @@ def perform_search(query):
 
 def homepage(request):
     data = {
-        "title" : "Dictionary App"
+        "title" : "easydefine.io"
     }
     return render(request, 'index.html',data)
 
