@@ -15,7 +15,7 @@
         margin-bottom: 20px;
     }
     .search-input {
-        width: 400px;
+        width: 30%;
         padding: 10px;
         font-size: 16px;
     }
@@ -42,9 +42,9 @@
     }
     .close-btn{
         display: none;
-        height:50px;
-        width:50px;
-        border-radius: 50px;
+        height:45px;
+        width:45px;
+        border-radius: 45px;
         border: none;
         position: absolute;
         right:15%;
@@ -68,6 +68,24 @@
         margin-left: 20px;
         background-color: #f9f9f9;
         border: 1px solid #ddd;
+    }
+    @media only screen and (max-width: 600px) {
+      .search-results {
+        width: 100%;
+      }
+      .search-input {
+        width:40%;
+      }
+      h1{
+        font-size:25px;
+      }
+      .navbar-toggle {
+        width: 25px;
+        height: 21px;
+      }
+      .close-btn{
+        right:7%;
+      }
     }
     .about-results {
         width:70%;
@@ -138,8 +156,8 @@
     /* Add more styles as needed */
     }
     .button-icon{
-        height:50px;
-        width:50px;
+        height:45px;
+        width:45px;
         border-radius: 50px;
         align-items: center;
     }
@@ -205,8 +223,8 @@
     }
 
     .navbar-toggle {
-    width: 30px;
-    height: 26px;
+    width: 25px;
+    height: 21px;
     position: absolute;
     cursor: pointer;
     z-index: 9999;
