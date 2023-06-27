@@ -69,8 +69,19 @@
         background-color: #f9f9f9;
         border: 1px solid #ddd;
     }
+    .about-results {
+        width:70%;
+        padding: 10px;
+        margin-right: 20px;
+        margin-left: 20px;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+    }
     @media only screen and (max-width: 600px) {
       .search-results {
+        width: 100%;
+      }
+      .about-results {
         width: 100%;
       }
       .search-input {
@@ -87,14 +98,7 @@
         right:7%;
       }
     }
-    .about-results {
-        width:70%;
-        padding: 10px;
-        margin-right: 20px;
-        margin-left: 20px;
-        background-color: #f9f9f9;
-        border: 1px solid #ddd;
-    }
+    
     .about-results-dark {
         padding: 10px;
         background-color: #a7a7a7;
