@@ -115,12 +115,18 @@ console.log('Starting ...');
             return Object.keys(obj).length === 0;
           }
         function toggleDarkMode() {
+            console.log('Toggling dark Mode');
             const body = document.querySelector('body');
             const container = document.getElementById('header');
             const buttonIcon = container.querySelector('#dark-mode-button');
 
             const srchresults = body.querySelector('#search-results');
             const aboutresults = body.querySelector('#about-results');
+
+            const searchInput = document.getElementById("search-input");
+            console.log("searchInput");
+
+            searchInput.classList.toggle('dark');
             if(aboutresults != null){
                 aboutresults.classList.toggle('about-results-dark');
             }

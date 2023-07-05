@@ -1,11 +1,19 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>
         Dictionary App
-        {% load static %}
     </title>
     <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <style>
+        body{
+            background-image: url("{% static 'background.jpg' %}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+    </style>
 </head>
 <body>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
